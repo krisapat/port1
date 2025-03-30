@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Slider with Tailwind</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .slider {
+            width: min(1500px, 90vw);
+            margin: auto;
+            height: 300px;
+            overflow: hidden;
+            mask-image: linear-gradient(to right,
+                    transparent,
+                    #000000 5% 95%,
+                    transparent);
+            border-radius: 20px;
+        }
+
+        .slider .list {
+            display: flex;
+            min-width: calc(var(--width) * var(--quantity));
+            position: relative;
+        }
+
+        .slider .list .item {
+            width: var(--width);
+            height: var(--height);
+            position: absolute;
+            animation: autoRun 20s linear infinite;
+            transition: filter 0.5s;
+            animation-delay: calc((20s / var(--quantity)) * (var(--position) - 1) - 20s);
+        }
+
+        .slider .list .item img {
+            width: 100%;
+            border-radius: 20px;
+        }
+
+        @keyframes autoRun {
+            from {
+                left: 100%;
+            }
+
+            to {
+                left: calc(var(--width) * -1);
+            }
+        }
+
+        .slider:hover .item {
+            animation-play-state: paused;
+            filter: grayscale(1);
+        }
+
+        .slider .item:hover {
+            filter: grayscale(0);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-800 text-white">
+    <header>
+        <!-- Navbar -->
+        <nav class="bg-zinc-900 p-4 ">
+            <div class="container mx-auto flex items-center justify-between">
+                <!-- Logo -->
+                <div class="text-white text-2xl font-bold">
+                    solo leveling
+                </div>
+
+                <!-- Navbar Links -->
+                <div class="hidden md:flex space-x-5 text-white">
+                    <a href="#"
+                        class="text-violet-500 hover:transform hover:scale-[1.2] transition-transform duration-300">Home</a>
+                    <a href="#"
+                        class="hover:text-violet-500 hover:transform hover:scale-[1.2] transition-all duration-300">About</a>
+                    <a href="#"
+                        class="hover:text-violet-500 hover:transform hover:scale-[1.2] transition-all duration-300">Services</a>
+                    <a href="#"
+                        class="hover:text-violet-500 hover:transform hover:scale-[1.2] transition-all duration-300">Contact</a>
+                </div>
+
+                <!-- Hamburger Icon -->
+                <div class="md:hidden flex items-center text-white">
+                    <button id="hamburger-icon" class="text-white focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden bg-zinc-800 hidden text-white flex flex-col items-start">
+            <a href="#"
+                class="text-violet-500 hover:scale-[1.2] origin-left transition-transform duration-300 px-4 py-3">Home</a>
+            <a href="#"
+                class="hover:text-violet-500 hover:scale-[1.2] origin-left transition-transform duration-300 px-4 py-3">About</a>
+            <a href="#"
+                class="hover:text-violet-500 hover:scale-[1.2] origin-left transition-transform duration-300 px-4 py-3">Services</a>
+            <a href="#"
+                class="hover:text-violet-500 hover:scale-[1.2] origin-left transition-transform duration-300 px-4 py-3">Contact</a>
+        </div>
+
+    </header>
+    <main>
+        <div class="bg-gray-900 bg-opacity-80 w-[90vw] mx-auto flex flex-col md:flex-row items-center justify-between gap-6 rounded-lg my-12">
+            <!-- ส่วนซ้าย (ข้อความ) -->
+            <div class="md:w-1/2 text-center md:text-left space-y-4 p-5">
+                <h1 class="text-3xl font-bold text-violet-600">Sung Jin-Woo</h1>
+                <p class="text-white">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci tenetur, earum labore explicabo
+                    ullam aspernatur provident eveniet, ipsum dolor vitae dolorum debitis modi pariatur ad, fugiat omnis
+                    eius? Suscipit, animi?
+                </p>
+            </div>
+
+            <!-- ส่วนขวา (รูปภาพ) -->
+            <div class="md:w-1/2 flex justify-end p-5">
+                <img src="/img/sung.png" alt="Sung Jin-Woo" class="w-[300px] md:w-[400px] rounded-lg shadow-lg">
+            </div>
+        </div>
+        <h1 class="text-5xl md:text-5xl font-extrabold text-center text-white">
+            My Shadow Army
+        </h1>
+        <div class="flex justify-center items-center my-12">
+            <div class="w-[90vw] max-w-[1000px] flex justify-center items-center">
+                <div class="slider  h-[300px] mx-auto overflow-hidden rounded-2xl"
+                    style="--width: 300px; --height: 300px; --quantity: 8;">
+                    <div class="list flex relative min-w-[calc(var(--width)*var(--quantity))] gap-4">
+                        <!-- การใช้ gap เพื่อจัดระยะห่างระหว่างแต่ละ item -->
+                        <div class="item w-[var(--width)] h-[var(--height)]" style="--position: 1"><img src="/img/1.png"
+                                class="w-full rounded-2xl"></div>
+                        <div class="item w-[var(--width)] h-[var(--height)]" style="--position: 2"><img src="/img/2.png"
+                                class="w-full rounded-2xl"></div>
+                        <div class="item w-[var(--width)] h-[var(--height)]" style="--position: 3"><img src="/img/3.png"
+                                class="w-full rounded-2xl"></div>
+                        <div class="item w-[var(--width)] h-[var(--height)]" style="--position: 4"><img src="/img/4.png"
+                                class="w-full rounded-2xl"></div>
+                        <div class="item w-[var(--width)] h-[var(--height)]" style="--position: 5"><img src="/img/5.png"
+                                class="w-full rounded-2xl"></div>
+                        <div class="item w-[var(--width)] h-[var(--height)]" style="--position: 6"><img src="/img/6.png"
+                                class="w-full rounded-2xl"></div>
+                        <div class="item w-[var(--width)] h-[var(--height)]" style="--position: 7"><img src="/img/7.png"
+                                class="w-full rounded-2xl"></div>
+                        <div class="item w-[var(--width)] h-[var(--height)]" style="--position: 8"><img src="/img/8.png"
+                                class="w-full rounded-2xl"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="/src/script.js"></script>
+</body>
+
+</html>
