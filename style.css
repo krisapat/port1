@@ -1,3 +1,54 @@
+/*ไล่เฟด*/
+.fades {
+    opacity: 0;
+    transition: opacity 3s ease-in-out;
+}
+
+/**/
+/*ไล่ขอบ*/
+.skew-box-right {
+    background-size: cover;
+    /* ทำให้รูปเต็มกล่อง */
+    background-position: center;
+    background-repeat: no-repeat;
+    clip-path: polygon(0% 20%, 100% 0%, 100% 80%, 0% 100%);
+}
+
+.skew-box-left {
+    background-size: cover;
+    /* ทำให้รูปเต็มกล่อง */
+    background-position: center;
+    background-repeat: no-repeat;
+    clip-path: polygon(0% 0%, 100% 20%, 100% 100%, 0% 80%);
+
+}
+
+/*ไล่ขอบ*/
+/*ออร่า*/
+@keyframes glow {
+    0% {
+        box-shadow: 0 0 5px rgba(95, 0, 142, 0.5);
+    }
+
+    50% {
+        box-shadow: 0 0 20px rgba(145, 0, 236, 0.8);
+    }
+
+    100% {
+        box-shadow: 0 0 5px rgba(95, 0, 142, 0.5);
+    }
+}
+
+.glow-effect {
+    transition: all 0.3s ease-in-out;
+}
+
+.glow-effect:hover {
+    animation: glow 2s infinite alternate;
+}
+
+/*ออร่า*/
+/*auto run*/
 .slider {
     width: min(1500px, 90vw);
     margin: auto;
@@ -20,9 +71,9 @@
     width: var(--width);
     height: var(--height);
     position: absolute;
-    animation: autoRun 20s linear infinite;
+    animation: autoRun 30s linear infinite;
     transition: filter 0.5s;
-    animation-delay: calc((20s / var(--quantity)) * (var(--position) - 1) - 20s);
+    animation-delay: calc((30s / var(--quantity)) * (var(--position) - 1) - 30s);
 }
 
 .slider .list .item img {
@@ -48,50 +99,55 @@
 .slider .item:hover {
     filter: grayscale(0);
 }
-.fades {
-    opacity: 0;
-    transition: opacity 1.5s ease-in-out;
+
+/*autorun*/
+/*ขอบปุ่ม*/
+@property --angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
 }
 
-
-@keyframes glow {
-    0% { box-shadow: 0 0 5px rgba(95, 0, 142, 0.5); }
-    50% { box-shadow: 0 0 20px rgba(145, 0, 236, 0.8); }
-    100% { box-shadow: 0 0 5px rgba(95, 0, 142, 0.5); }
+@keyframes spin {
+    from {
+        --angle: 0deg;
+    }
+    to {
+        --angle: 360deg;
+    }
 }
 
-.glow-effect {
-    transition: all 0.3s ease-in-out;
+.border-animation {
+    position: relative; /* ป้องกันขอบซ้อนปุ่ม */
+    display: inline-block;
+    z-index: 1;
+    background-color: #1f2937; /* เทียบเท่ากับ bg-gray-900 */
 }
 
-.glow-effect:hover {
-    animation: glow 2s infinite alternate;
-}
-@keyframes glow-red {
-    0% { box-shadow: 0 0 5px rgba(142, 0, 5, 0.5); }
-    50% { box-shadow: 0 0 20px rgba(236, 0, 0, 0.8); }
-    100% { box-shadow: 0 0 5px rgba(142, 0, 5, 0.5); }
-}
-
-.glow-effect-red {
-    transition: all 0.3s ease-in-out;
-}
-
-.glow-effect-red:hover {
-    animation: glow-red 2s infinite alternate;
+.border-animation::after,
+.border-animation::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    z-index: -3;
 }
 
-
-.into-in {
-    opacity: 0;
-    transform: translateX(-20px);
-    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+.border-animation::after {
+    background-color: #1f2937; /* ทำให้ปุ่มเป็นสีพื้นหลัง gray-900 */
+    z-index: -2;
 }
-.into-in.show, .no-into {
+
+.border-animation::before {
+    background-image: conic-gradient(from var(--angle), #a136ff, #000000);
+    padding: 3px;
+    animation: spin 2s linear infinite;
+    filter: blur(0.5rem);
     opacity: 1;
-    transform: translateX(0);
+    inset: -3px; /* ให้ขอบแนบชิดปุ่ม */
 }
 
-html {
-    scroll-behavior: smooth;
-}
+/*ขอบปุ่ม*/

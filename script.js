@@ -1,10 +1,12 @@
+//nav
 const hamburgerIcon = document.getElementById("hamburger-icon");
 const mobileMenu = document.getElementById("mobile-menu");
 
 hamburgerIcon.addEventListener("click", () => {
     mobileMenu.classList.toggle("hidden");
 });
-
+//nav
+//fades
 document.addEventListener("DOMContentLoaded", () => {
     const fadeElements = document.querySelectorAll(".fades");
 
@@ -19,22 +21,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
     fadeElements.forEach(el => observer.observe(el));
 });
-
-function changeContent(name, description, imageSrc) {
-    let textContent = document.getElementById('content-text');
-    let imageContent = document.getElementById('content-image');
-    let image = document.getElementById('char-image');
-
-    textContent.classList.remove('no-into');
-    textContent.classList.remove('show');
-    imageContent.classList.remove('show');
-    
-    setTimeout(() => {
-        document.getElementById('char-name').innerText = name;
-        document.getElementById('char-description').innerText = description;
-        image.src = imageSrc;
-        image.classList.remove('hidden');
-        textContent.classList.add('show');
-        imageContent.classList.add('show');
-    }, 100);
-}
+//fades
